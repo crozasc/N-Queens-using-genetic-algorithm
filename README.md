@@ -10,7 +10,7 @@ The objective of this implementation is to be able to create a library of functi
 ## Usage
 
 Clone this repository and in the project folder run the terminal and type the command python `python main.py`.<br>
-To run this code you need `python@3.10.4`.
+This repository was tested with `python@3.10.5`.
 
 ## Credits
 
