@@ -1,6 +1,7 @@
 import random
 
 class Queen:
+    # A class with every important variable and methods used to resolve the problem
     def __init__(self, bestFitness, cross_probability, mutation_probability, population, generation):
         self.generation = generation
         self.bestFitness = bestFitness
@@ -12,6 +13,7 @@ class Queen:
         self.newPopulation = self.genetic_algorithm()
 
     def newGeneration(self):
+        # A function that replace the old chromosomes with low average fitness with new ones given with genetic algorithm
         avg = 0
         for i in range(len(self.population)):
             avg = avg + self.populationFitness[i]
@@ -23,8 +25,9 @@ class Queen:
         return self.population
         
     def genetic_algorithm(self):
+        # A function that create a new generation of chromosomes with Roulette Wheel
         new_population = []
-        probabilities = [probability(n, self.bestFitness) for n in self.population] #Roulette Wheel
+        probabilities = [probability(n, self.bestFitness) for n in self.population] 
         populationWithProbabilty = zip(self.population, probabilities)
         populationWithProbabilty = list(populationWithProbabilty)
         for _ in range(len(populationWithProbabilty)):
@@ -39,11 +42,13 @@ class Queen:
         return new_population
 
     def printQueen(self):
+        # A function that print the generation and his respectives chromosomes
         print("Generation "+ str(self.generation) + ":")
-        #for i in range(len(self.population)):
-        #    print("Chromosome = " + str(self.population[i]) + " Fitness = " + str(self.populationFitness[i]))
+        for i in range(len(self.population)):
+            print("Chromosome = " + str(self.population[i]) + " Fitness = " + str(self.populationFitness[i]))
     
     def solution(self):
+        # Afunction that return an array with the solutions of the problem
         solutions = []
         for i in range(len(self.population)):
             if(self.populationFitness[i] == self.bestFitness):
@@ -53,18 +58,22 @@ class Queen:
 
         
 def myFloatRandom():
-    return(random.uniform(0,1))
+    # A simple function that return a random float number between 0 and 1
+    return (random.uniform(0,1))
 
 def myIntRandom(a, b):
+    # A simple function that return a random int number between a and b
     if(a <= b):
         return (random.randint(a, b-1))
     else:
         return (random.randint(b, a-1))
 
 def myChromosome(nqueens):
+    # A function that return a array of nqueens size with numbers between 0 and nqueens
     return [myIntRandom(0, nqueens) for _ in range(nqueens)]
 
 def horizontalCollisions(chromosome):
+    # A function that return the number of collisions in horizontal
     horizontal_collisions = 0
     n = len(chromosome)
     for i in range(n):
@@ -75,6 +84,7 @@ def horizontalCollisions(chromosome):
     return (horizontal_collisions / 2)
 
 def diagonalCollisions(chromosome):
+    # A function that return the number of collisions in diagonal
     diagonal_collisions = 0
     n = len(chromosome)
     left_diagonal = [0] * 2 * n
@@ -95,14 +105,17 @@ def diagonalCollisions(chromosome):
     return (diagonal_collisions)
 
 def fitness(chromosome, bestFitness):
+    # A function that return the fitness of a chromosome
     horizontal_collisions = horizontalCollisions(chromosome)
     diagonal_collisions = diagonalCollisions(chromosome)
     return int(bestFitness - (horizontal_collisions + diagonal_collisions))
 
 def probability(chromosome, bestFitness):
+    # A function that return the probability of a chromosome succesful
     return (fitness(chromosome, bestFitness) / bestFitness)
 
 def random_pick(populationWithProbabilty):
+    # A function that pick a random chromosome according to its succesful
     total = sum(prob for chromosome, prob in populationWithProbabilty)
     r = random.uniform(0, total)
     aux = 0
@@ -112,11 +125,13 @@ def random_pick(populationWithProbabilty):
         else : aux = aux + prob
 
 def reproduce(x, y):
+    # A function that pick two chromosomes and reproduces them to return a mixture of their genes
     n = len(x)
     crossPoint = myIntRandom(0, n - 1)
     return x[0:crossPoint] + y[crossPoint:n]
 
 def mutate(x):
+    # A function that pick a chromosome and mutate one gene
     n = len(x)
     mutationPoint = myIntRandom(0, n - 1)
     mutation = myIntRandom(1, n)
@@ -124,6 +139,7 @@ def mutate(x):
     return x
 
 def print_board(nqueens, solutions):
+    # A function that print the solution's board
     board = []
     for x in range(nqueens):
         board.append(["x"] * nqueens)
