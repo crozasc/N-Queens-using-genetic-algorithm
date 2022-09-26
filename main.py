@@ -1,11 +1,67 @@
 from my_functions import *
 
-seed = int(input("Seed: "))
-nqueens = int(input("Number of Queens: "))
-sizePopulation = int(input("Size of Population: "))
-cross_probability = float(input("Cross probability: "))
-mutation_probability = float(input("Mutation probability: "))
-max_generations = int(input("Maximum of generations: "))
+while True:
+    try:
+        seed = int(input("Seed: "))
+    except ValueError:
+        print("Numeric digits only please.")
+    else:
+        break
+
+while True:
+    try:
+        nqueens = int(input("Number of Queens: "))
+        if (nqueens <= 2):
+            print("Must be positive and greater than 0.")
+            continue
+        else:
+            break
+    except ValueError:
+        print("Numeric digits only please.")
+
+while True:
+    try:
+        sizePopulation = int(input("Size of Population: "))
+        if (sizePopulation <= 0):
+            print("Must be positive and greater than 0.")
+            continue
+        else:
+            break
+    except ValueError:
+        print("Numeric digits only please.")
+
+while True:
+    try:
+        cross_probability = float(input("Cross probability: "))
+        if (cross_probability < 0 or cross_probability > 1):
+            print("Must be a number between 0 and 1.")
+            continue
+        else:
+            break
+    except ValueError:
+        print("Decimal numbers only please.")
+
+while True:
+    try:
+        mutation_probability = float(input("Mutation probability: "))
+        if (mutation_probability < 0 or mutation_probability > 1):
+            print("Must be a number between 0 and 1.")
+            continue
+        else:
+            break
+    except ValueError:
+        print("Decimal numbers only please.")
+
+while True:
+    try:
+        max_generations = int(input("Maximum of generations: "))
+        if (max_generations <= 0):
+            print("Must be positive and greater than 0.")  
+            continue
+        else:
+            break 
+    except ValueError:
+        print("Numbers only please.")
 
 '''
 Test
