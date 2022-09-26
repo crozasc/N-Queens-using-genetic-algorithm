@@ -9,8 +9,8 @@ This code has the following functions:<br>
 <li>Calculate fitness</li><br>
 <li>Roulette wheel metod</li><br>
 <li>Reproduce two chromosomes</li><br>
-<li>Mute one chromosome</li><br>
-This code need the following inputs:<br>
+<li>Mute one chromosome</li><br><br>
+This code need the following inputs:<br><br>
 <li>Seed: Defines the seed number for randomization</li><br>
 <li>Size_board: Defines the size of the board (Number of queens)</li><br>
 <li>Population: Defines the amount of population</li><br>
