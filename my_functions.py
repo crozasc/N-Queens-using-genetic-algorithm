@@ -31,8 +31,8 @@ class Queen:
         populationWithProbabilty = zip(self.population, probabilities)
         populationWithProbabilty = list(populationWithProbabilty)
         for _ in range(len(populationWithProbabilty)):
-            x = random_pick(populationWithProbabilty)
-            y = random_pick(populationWithProbabilty) 
+            x = rouletteWheel(populationWithProbabilty)
+            y = rouletteWheel(populationWithProbabilty) 
             if myFloatRandom() <= self.cross_probability:
                 child = reproduce(x, y)
             else: child = x
@@ -114,7 +114,7 @@ def probability(chromosome, bestFitness):
     # A function that return the probability of a chromosome succesful
     return (fitness(chromosome, bestFitness) / bestFitness)
 
-def random_pick(populationWithProbabilty):
+def rouletteWheel(populationWithProbabilty):
     # A function that pick a random chromosome according to its succesful
     total = sum(prob for chromosome, prob in populationWithProbabilty)
     r = random.uniform(0, total)
