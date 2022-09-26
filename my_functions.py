@@ -142,10 +142,10 @@ def printBoard(nqueens, solutions):
     # A function that print the solution's board
     board = []
     for x in range(nqueens):
-        board.append(["x"] * nqueens)
+        board.append(["▢"] * nqueens)
     for i in range(nqueens):
         z = int(solutions[i])
-        board[i][z]="Q"
+        board[i][z]="♕"
     for row in board:
         print (" ".join(row))
 
