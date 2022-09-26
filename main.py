@@ -1,19 +1,15 @@
 from my_functions import *
+import sys
 
-'''           
-argb
-ejemplo de codigo ejecutable
-entregar el mejor fitness
-valores unicos en el cromosoma
-'''
+seed = int(sys.argv[1])
+nqueens = int(sys.argv[2])
+sizePopulation = int(sys.argv[3])
+cross_probability = float(sys.argv[4])
+mutation_probability = float(sys.argv[5])
+max_generations = int(sys.argv[6])
 
+'''python main.py 100 9 30 0.95 0.05 100'''
 
-seed = 2
-nqueens = 12
-sizePopulation = 75
-cross_probability = 0.95
-mutation_probability = 0.05
-max_generations = 500
 
 random.seed(seed)
 bestFitness = (nqueens * (nqueens - 1)) / 2

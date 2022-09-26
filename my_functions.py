@@ -177,11 +177,11 @@ def printBoard(nqueens, solutions):
     board = []
 
     for x in range(nqueens):
-        board.append(["▢"] * nqueens)
+        board.append(["X"] * nqueens)
 
     for i in range(nqueens):
         z = int(solutions[i])
-        board[i][z]="♕"
+        board[i][z]="Q"
 
     for row in board:
         print (" ".join(row))

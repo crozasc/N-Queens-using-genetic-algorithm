@@ -17,8 +17,8 @@ This code has the following functions:<br>
 <li>Compare the old generation with her childs to generate a new generation</li><br>
 
 ## Usage
-
-Clone this repository and in the project folder run the terminal and type the command python `python main.py`.<br>
+Clone this repository and in the project folder run the terminal and type the command `python main.py seed size_board population cross_probability mutation_probability number_iterations`.<br>
+For example `python main.py 100 9 30 0.95 0.05 100`
 This repository was tested with `python@3.10.5`.
 
 ## Credits
