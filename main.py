@@ -1,88 +1,47 @@
 from my_functions import *
 
-while True:
-    try:
-        seed = int(input("Seed: "))
-    except ValueError:
-        print("Numeric digits only please.")
-    else:
-        break
-
-while True:
-    try:
-        nqueens = int(input("Number of Queens: "))
-        if (nqueens <= 2):
-            print("Must be positive and greater than 0.")
-            continue
-        else:
-            break
-    except ValueError:
-        print("Numeric digits only please.")
-
-while True:
-    try:
-        sizePopulation = int(input("Size of Population: "))
-        if (sizePopulation <= 0):
-            print("Must be positive and greater than 0.")
-            continue
-        else:
-            break
-    except ValueError:
-        print("Numeric digits only please.")
-
-while True:
-    try:
-        cross_probability = float(input("Cross probability: "))
-        if (cross_probability < 0 or cross_probability > 1):
-            print("Must be a number between 0 and 1.")
-            continue
-        else:
-            break
-    except ValueError:
-        print("Decimal numbers only please.")
-
-while True:
-    try:
-        mutation_probability = float(input("Mutation probability: "))
-        if (mutation_probability < 0 or mutation_probability > 1):
-            print("Must be a number between 0 and 1.")
-            continue
-        else:
-            break
-    except ValueError:
-        print("Decimal numbers only please.")
-
-while True:
-    try:
-        max_generations = int(input("Maximum of generations: "))
-        if (max_generations <= 0):
-            print("Must be positive and greater than 0.")  
-            continue
-        else:
-            break 
-    except ValueError:
-        print("Numbers only please.")
-
+'''           
+argb
+ejemplo de codigo ejecutable
+entregar el mejor fitness
+valores unicos en el cromosoma
 '''
-Test
-seed = 1
-nqueens = 7
-sizePopulation = 500
+
+
+seed = 2
+nqueens = 12
+sizePopulation = 75
 cross_probability = 0.95
 mutation_probability = 0.05
-max_generations = 100
-'''
+max_generations = 500
+
 random.seed(seed)
 bestFitness = (nqueens * (nqueens - 1)) / 2
-population = [myChromosome(nqueens) for _ in range(sizePopulation)]
-
-for i in range(max_generations):
-    queen = Queen(bestFitness, cross_probability, mutation_probability, population, i+1)
-    queen.printQueen()
-    newpopulation = queen.newGeneration()
-    
-    if (queen.solutions):
-        print("Solved in generation " + str(queen.generation))
-        print("The solution is " + str(queen.solutions[0]) + " with " + str(bestFitness) + " fitness")
-        printBoard(nqueens, queen.solutions[0])
+population = firstPopulation(nqueens, sizePopulation)
+populationFitness = [fitness(chromosome, bestFitness) for chromosome in population]
+printGeneration(population, populationFitness, int(0))
+solutions = []
+noSolution = 1
+for i in range(max_generations-1):
+    solutions = solution(population, populationFitness, bestFitness)
+    if (solutions):
+        print("Solved in generation " + str(i+1))
+        print("The solution is " + str(solutions[0]) + " with " + str(bestFitness) + " fitness")
+        printBoard(nqueens, solutions[0])
+        noSolution = 0
         break
+
+    population = geneticAlgorithm(population, bestFitness, cross_probability, mutation_probability)
+    populationFitness = [fitness(chromosome, bestFitness) for chromosome in population]
+    printGeneration(population, populationFitness, i+1)
+
+if (noSolution==1):
+        print("No solution founded")
+        pos = 0
+        theBest = int(0)
+        for i in range(len(populationFitness)):
+            if(populationFitness[i] > theBest):
+                theBest = populationFitness[i]
+                pos = i
+        print("One of best chromosome is " + str(population[i]) + " with " + str(int(theBest)) + " fitness")
+        printBoard(nqueens, population[i])

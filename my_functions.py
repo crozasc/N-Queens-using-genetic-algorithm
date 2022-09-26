@@ -1,60 +1,47 @@
 import random
-
-class Queen:
-    # A class with every important variable and methods used to resolve the problem
-    def __init__(self, bestFitness, cross_probability, mutation_probability, population, generation):
-        self.generation = generation
-        self.bestFitness = bestFitness
-        self.cross_probability = cross_probability
-        self.mutation_probability = mutation_probability
-        self.population = population
-        self.populationFitness = [fitness(chromosome, bestFitness) for chromosome in self.population]
-        self.solutions = self.solution()
-        self.newPopulation = self.geneticAlgorithm()
-
-    def newGeneration(self):
-        # A function that replace the old chromosomes with low average fitness with new ones given with genetic algorithm
-        avg = 0
-        for i in range(len(self.population)):
-            avg = avg + self.populationFitness[i]
-        avg = avg / (len(self.population))
-        avg = round(avg)
-        for i in range(len(self.population)):
-            if (self.populationFitness[i] <= avg) and (myFloatRandom()>=0.25):
-                self.population[i] = self.newPopulation[i]
-        return self.population
         
-    def geneticAlgorithm(self):
-        # A function that create a new generation of chromosomes with Roulette Wheel
-        new_population = []
-        probabilities = [probability(n, self.bestFitness) for n in self.population] 
-        populationWithProbabilty = zip(self.population, probabilities)
-        populationWithProbabilty = list(populationWithProbabilty)
-        for _ in range(len(populationWithProbabilty)):
-            x = rouletteWheel(populationWithProbabilty)
+def geneticAlgorithm(population, bestFitness, cross_probability, mutation_probability):
+    # A function that create a new generation of chromosomes with Roulette Wheel
+    new_population = []
+    probabilities = [probability(n, bestFitness) for n in population] 
+    populationWithProbabilty = zip(population, probabilities)
+    populationWithProbabilty = list(populationWithProbabilty)
+
+    while(len(new_population)!=len(population)):
+
+        x = rouletteWheel(populationWithProbabilty)
+
+        if myFloatRandom() <= cross_probability:
             y = rouletteWheel(populationWithProbabilty) 
-            if myFloatRandom() <= self.cross_probability:
-                child = reproduce(x, y)
-            else: child = x
-            if myFloatRandom() <= self.mutation_probability:
-                child = mutate(child)
+            while x == y:
+                y = rouletteWheel(populationWithProbabilty) 
+            child = reproduce(x, y)
+            child = correction(child)
+        else: child = x
+
+        if myFloatRandom() <= mutation_probability:
+            child = mutate(child)
+
+        if child not in new_population:
             new_population.append(child)
-        return new_population
 
-    def printQueen(self):
-        # A function that print the generation and his respectives chromosomes
-        print("Generation "+ str(self.generation) + ":")
-        for i in range(len(self.population)):
-            print("Chromosome = " + str(self.population[i]) + " Fitness = " + str(self.populationFitness[i]))
-    
-    def solution(self):
-        # Afunction that return an array with the solutions of the problem
-        solutions = []
-        for i in range(len(self.population)):
-            if(self.populationFitness[i] == self.bestFitness):
-                solutions.append(self.population[i])
-        return solutions
+    return new_population
 
+def printGeneration(population, populationFitnesss, i):
+    # A function that print the generation and his respectives chromosomes
+    print("Generation "+ str(i+1) + ":")
+    for i in range(len(population)):
+        print("Chromosome = " + str(population[i]) + " Fitness = " + str(populationFitnesss[i]))
+
+def solution(population, populationFitness, bestFitness):
+    # Afunction that return an array with the solutions of the problem
+    solutions = []
+
+    for i in range(len(population)):
+        if(populationFitness[i] == bestFitness):
+            solutions.append(population[i])
+
+    return solutions
 
         
 def myFloatRandom():
@@ -63,25 +50,44 @@ def myFloatRandom():
 
 def myIntRandom(a, b):
     # A simple function that return a random int number between a and b
-    if(a <= b):
-        return (random.randint(a, b-1))
+    if(a < b):
+        return (random.randint(a, b))
+
+    elif (a > b):
+        return (random.randint(b, a))
+
     else:
-        return (random.randint(b, a-1))
+        return (a)
 
-def myChromosome(nqueens):
-    # A function that return a array of nqueens size with numbers between 0 and nqueens
-    return [myIntRandom(0, nqueens) for _ in range(nqueens)]
+def maxCombinations(nqueens):
+    # A function that return nqueens!, that is, factorial
+    aux = 1
+    for i in range(1,nqueens+1):
+        aux = aux * i
+    return aux
 
-def horizontalCollisions(chromosome):
-    # A function that return the number of collisions in horizontal
-    horizontal_collisions = 0
-    n = len(chromosome)
-    for i in range(n):
-        for j in range(n):
-            if (chromosome[i] == chromosome[j]): 
-                horizontal_collisions += 1
-        horizontal_collisions -= 1
-    return (horizontal_collisions / 2)
+def firstPopulation(nqueens, sizePopulation):
+    # A function that return a array with the population with unique chromosomes with genes unrepeated
+    population = []
+    uniqueNumbers = []
+    i = 0
+    maxPopulation = maxCombinations(nqueens)
+    if(sizePopulation > maxPopulation):
+        sizePopulation = maxPopulation
+    while i != sizePopulation:
+        for x in range(nqueens):
+            uniqueNumbers.append(x)
+        j = 0
+        chromosome = []
+        while j != nqueens:
+            quitar = myIntRandom(0, len(uniqueNumbers)-1)
+            chromosome.append(uniqueNumbers[quitar])
+            uniqueNumbers.pop(quitar)
+            j += 1
+        if chromosome not in population:
+            population.append(chromosome)
+            i += 1
+    return population
 
 def diagonalCollisions(chromosome):
     # A function that return the number of collisions in diagonal
@@ -106,9 +112,8 @@ def diagonalCollisions(chromosome):
 
 def fitness(chromosome, bestFitness):
     # A function that return the fitness of a chromosome
-    horizontal_collisions = horizontalCollisions(chromosome)
     diagonal_collisions = diagonalCollisions(chromosome)
-    return int(bestFitness - (horizontal_collisions + diagonal_collisions))
+    return int(bestFitness - (diagonal_collisions))
 
 def probability(chromosome, bestFitness):
     # A function that return the probability of a chromosome succesful
@@ -117,10 +122,11 @@ def probability(chromosome, bestFitness):
 def rouletteWheel(populationWithProbabilty):
     # A function that pick a random chromosome according to its succesful
     total = sum(prob for chromosome, prob in populationWithProbabilty)
-    r = random.uniform(0, total)
+    wheelNum = random.uniform(0, total)
+
     aux = 0
     for chromosome, prob in populationWithProbabilty:
-        if (r <= aux + prob):
+        if (wheelNum <= aux + prob):
             return chromosome
         else : aux = aux + prob
 
@@ -130,22 +136,53 @@ def reproduce(x, y):
     crossPoint = myIntRandom(0, n - 1)
     return x[0:crossPoint] + y[crossPoint:n]
 
+def correction(x):
+    #A function that makes a correction of a chromosome after a reproduction, preventing the chromosome from having repeated genes
+    posRepeated = []
+    nonSeen = []
+
+    for i in range(len(x)):
+        nonSeen.append(i)
+
+    for i in range(len(x)):
+        if (x[i] in nonSeen): 
+            nonSeen.remove(x[i])
+        for j in range (i+1, len(x)):
+            if (x[i] == x[j]):
+                posRepeated.append(i)
+
+    for i in range(len(posRepeated)):
+        unique = myIntRandom(0, len(posRepeated)-1)
+        x[posRepeated[0]] = nonSeen[unique]
+        posRepeated.pop(0)
+        nonSeen.pop(unique)
+
+    return x
+
 def mutate(x):
     # A function that pick a chromosome and mutate one gene
     n = len(x)
-    mutationPoint = myIntRandom(0, n - 1)
-    mutation = myIntRandom(1, n)
-    x[mutationPoint] = mutation
+    pos1 = myIntRandom(0, len(x)-1)
+    pos2 = myIntRandom(0, len(x)-1)
+
+    while pos1 == pos2:
+        pos2 = myIntRandom(0, len(x)-1)
+
+    x[pos1], x[pos2] = x[pos2], x[pos1]
+
     return x
 
 def printBoard(nqueens, solutions):
     # A function that print the solution's board
     board = []
+
     for x in range(nqueens):
         board.append(["▢"] * nqueens)
+
     for i in range(nqueens):
         z = int(solutions[i])
         board[i][z]="♕"
+
     for row in board:
         print (" ".join(row))
 
