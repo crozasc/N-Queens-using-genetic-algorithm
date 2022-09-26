@@ -83,7 +83,7 @@ for i in range(max_generations):
     
     if (queen.solutions):
         print("Solved in generation " + str(queen.generation))
-        print("The solution is " + str(queen.solutions[0]))
+        print("The solution is " + str(queen.solutions[0]) + " with " + str(bestFitness) + " fitness")
         print_board(nqueens, queen.solutions[0])
         break
 #print(str(bestFitness))
