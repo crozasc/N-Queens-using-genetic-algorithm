@@ -19,9 +19,9 @@ This code need the following inputs:<br><br>
 <li>Number_iterations: Defines the number of generations to work</li><br>
 
 ## Usage
-Clone this repository and in the project folder run the terminal and type the command `python main.py seed size_board population cross_probability mutation_probability number_iterations`.<br>
-For example `python main.py 100 9 30 0.95 0.05 100`.<br>
-This repository was tested with `python@3.10.5`.<br>
+Clone this repository and in the project folder run the terminal and type the command `python main.py seed size_board population cross_probability mutation_probability number_iterations`<br>
+For example `python main.py 100 9 30 0.95 0.05 100`<br>
+This repository was tested with `python@3.10.5`<br>
 
 ## Credits
 
