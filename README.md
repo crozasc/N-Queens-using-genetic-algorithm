@@ -2,9 +2,9 @@
 
 ## Description
 
-Develop a program using the Python3 programming language that implements the N-Queens problem using genetic algorithms.<br>
-The code must be developed using a modular programming methodology, that is, there must be use of functions and/or methods that generically implement the main
-genetic operators which will be used in the main program.<br>
+This program use the Python3 programming language that implements the N-Queens problem using genetic algorithms.<br>
+The code is developed using a modular programming methodology, that is, this code use functions and methods that implement the main
+genetic operators which is used in the main program.<br>
 The objective of this implementation is to be able to create a library of functions and/or methods that can be re-used in any other program that can be implemented in the future with the corresponding savings in time and lines of code.
 
 ## Usage
