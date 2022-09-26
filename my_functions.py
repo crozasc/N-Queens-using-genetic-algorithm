@@ -10,7 +10,7 @@ class Queen:
         self.population = population
         self.populationFitness = [fitness(chromosome, bestFitness) for chromosome in self.population]
         self.solutions = self.solution()
-        self.newPopulation = self.genetic_algorithm()
+        self.newPopulation = self.geneticAlgorithm()
 
     def newGeneration(self):
         # A function that replace the old chromosomes with low average fitness with new ones given with genetic algorithm
@@ -24,7 +24,7 @@ class Queen:
                 self.population[i] = self.newPopulation[i]
         return self.population
         
-    def genetic_algorithm(self):
+    def geneticAlgorithm(self):
         # A function that create a new generation of chromosomes with Roulette Wheel
         new_population = []
         probabilities = [probability(n, self.bestFitness) for n in self.population] 
@@ -138,7 +138,7 @@ def mutate(x):
     x[mutationPoint] = mutation
     return x
 
-def print_board(nqueens, solutions):
+def printBoard(nqueens, solutions):
     # A function that print the solution's board
     board = []
     for x in range(nqueens):
