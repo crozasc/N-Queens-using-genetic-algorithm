@@ -97,17 +97,12 @@ def diagonalCollisions(chromosome):
     right_diagonal = [0] * 2 * n
     
     for i in range(n):
-        left_diagonal[i + chromosome[i] - 1] += 1
-        right_diagonal[len(chromosome) - i + chromosome[i] - 2] += 1
-
-    for i in range(2 * n - 1):
-        counter = 0
-        if left_diagonal[i] > 1:
-            counter += left_diagonal[i] - 1
-        if right_diagonal[i] > 1:
-            counter += right_diagonal[i] - 1
-        diagonal_collisions += counter / (n - abs(i - n + 1))
-
+        for j in range(len(chromosome)):
+            if ( i != j):
+                dx = abs(i-j)
+                dy = abs(chromosome[i] - chromosome[j])
+                if(dx == dy):
+                    diagonal_collisions += 1
     return (diagonal_collisions)
 
 def fitness(chromosome, bestFitness):
