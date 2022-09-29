@@ -21,6 +21,7 @@ This code need the following parameters:<br><br>
 
 ## Usage
 Yo can found this repository in `https://github.com/crozasc/N-Queens-using-genetic-algorithm`<br>
+[Download here](https://github.com/crozasc/N-Queens-using-genetic-algorithm/archive/refs/heads/main.zip) <br>
 Clone this repository and in the project folder run the terminal and type the command <br>
 `python main.py seed size_board population cross_probability mutation_probability number_iterations`<br>
 For example `python main.py 100 9 30 0.95 0.05 100`<br>
