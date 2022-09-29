@@ -20,6 +20,7 @@ This code need the following parameters:<br><br>
 <li>Number_iterations: Defines the number of generations to work</li><br>
 
 ## Usage
+Yo can found this repository in `https://github.com/crozasc/N-Queens-using-genetic-algorithm`<br>
 Clone this repository and in the project folder run the terminal and type the command <br>
 `python main.py seed size_board population cross_probability mutation_probability number_iterations`<br>
 For example `python main.py 100 9 30 0.95 0.05 100`<br>
