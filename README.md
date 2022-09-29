@@ -1,8 +1,9 @@
 # N-Queens-using-genetic-algorithm
 
 ## Description
-
 This program uses the Python3 programming language to implement the N-Queens problem using genetic algorithms.<br>
+Once the program has started, differents generations of posible solutions will be generated with their respective fitness. If we find the solution, the vector with the corresponding solution will be printed at the same time with a representative board.<br>
+The fitness represent the quality of being suitable to solve this problem. <br>
 This code has the following functions:<br>
 <li>Random float generator for numbers between 0 and 1</li><br>
 <li>Random int generator for numbers between N and M</li><br>
@@ -10,7 +11,7 @@ This code has the following functions:<br>
 <li>Roulette wheel metod</li><br>
 <li>Reproduce two chromosomes</li><br>
 <li>Mute one chromosome</li><br><br>
-This code need the following inputs:<br><br>
+This code need the following parameters:<br><br>
 <li>Seed: Defines the seed number for randomization</li><br>
 <li>Size_board: Defines the size of the board (Number of queens)</li><br>
 <li>Population: Defines the amount of population</li><br>
