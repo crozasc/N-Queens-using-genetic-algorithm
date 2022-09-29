@@ -9,21 +9,19 @@ def geneticAlgorithm(population, bestFitness, cross_probability, mutation_probab
 
     while(len(new_population)!=len(population)):
 
-        x = rouletteWheel(populationWithProbabilty)
-
         if myFloatRandom() <= cross_probability:
+            x = rouletteWheel(populationWithProbabilty)
             y = rouletteWheel(populationWithProbabilty) 
             while x == y:
                 y = rouletteWheel(populationWithProbabilty) 
             child = reproduce(x, y)
             child = correction(child)
-        else: child = x
 
-        if myFloatRandom() <= mutation_probability:
-            child = mutate(child)
-
-        if child not in new_population:
-            new_population.append(child)
+            if myFloatRandom() <= mutation_probability:
+                child = mutate(child) 
+            
+            if child not in new_population:
+                new_population.append(child)
 
     return new_population
 
